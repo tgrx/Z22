@@ -32,6 +32,7 @@ assert_names() {
   dir_names=$(ls -d homeworks/* | sed -e 's/homeworks\///g')
   github_names=(
     "alexander_sidorov"
+    "kirill_shevchuk"
   )
 
   for n in ${dir_names}; do
