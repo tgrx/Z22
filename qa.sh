@@ -35,9 +35,12 @@ assert_names() {
     "alexander_sidorov"
     "alexei_rakhmanko"
     "anastasia_husainova"
+    "evgeni_gazin"
+    "ilya_nilov"
     "kirill_revenko"
     "kirill_shevchuk"
     "nikita_marchenkov"
+    "vladimir_lepeshko"
     "yan_romanovich"
   )
 
