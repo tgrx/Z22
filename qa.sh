@@ -31,9 +31,14 @@ function contains() {
 assert_names() {
   dir_names=$(ls -d homeworks/* | sed -e 's/homeworks\///g')
   github_names=(
-    "alexander_sidorov"
-    "kirill_shevchuk"
     "aleksey_gukov"
+    "alexander_sidorov"
+    "alexei_rakhmanko"
+    "anastasia_husainova"
+    "kirill_revenko"
+    "kirill_shevchuk"
+    "nikita_marchenkov"
+    "yan_romanovich"
   )
 
   for n in ${dir_names}; do
