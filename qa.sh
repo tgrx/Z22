@@ -33,6 +33,7 @@ assert_names() {
   github_names=(
     "alexander_sidorov"
     "kirill_shevchuk"
+    "aleksey_gukov"
   )
 
   for n in ${dir_names}; do
