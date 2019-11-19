@@ -1,7 +1,7 @@
 import platform
 
 def fnc4():
-    Name=input("fvgbhnjmk")
+    Name=input("Enter your name")
     return Name
 
 def fnc(argument):
@@ -11,8 +11,8 @@ def fnc(argument):
                 3: platform.uname(),
                 4: fnc4(),
             }
-            return switcher.get(argument, "Неверное значение")
-Nomer_varianta =int(input("Введите номер варианта 1-4:"))
+            return switcher.get(argument, "Incorrect value")
+Nomer_varianta =int(input("Enter number 1-4:"))
 result = fnc(Nomer_varianta)
 print(result)
 
