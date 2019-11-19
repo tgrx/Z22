@@ -11,7 +11,7 @@ def fnc(argument):
         1: "Hello world",
         2: "My name is Yan. I'm student of BSUIR', 29.07.2000",
         3: platform.uname(),
-        4: fnc4(),
+        4: fnc4,
     }
     return switcher.get(argument, "Incorrect value")
 
