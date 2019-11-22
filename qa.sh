@@ -40,6 +40,7 @@ assert_names() {
     "kirill_revenko"
     "kirill_shevchuk"
     "nikita_marchenkov"
+    "polina_korolenko"
     "vladimir_lepeshko"
     "yan_romanovich"
   )
