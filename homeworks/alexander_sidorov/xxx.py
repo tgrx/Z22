@@ -1,3 +1,2 @@
-def rev(a):
-	return "".join(reversed(a))
-
+def my_reversed(data):
+    return list(reversed(data))
