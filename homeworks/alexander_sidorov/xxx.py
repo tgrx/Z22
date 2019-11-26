@@ -1,1 +1,3 @@
-print("hello world")
+def rev(a):
+	return "".join(reversed(a))
+
