@@ -1,4 +1,4 @@
-import xxx
+from homeworks.aleksey_gukov import xxx
 
 
 def test():
