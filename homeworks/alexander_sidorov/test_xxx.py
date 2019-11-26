@@ -1,4 +1,6 @@
-import xxx
+from homeworks.alexander_sidorov import xxx
 
-assert xxx.rev([1,2,3]) == [3,2,1]
 
+def test():
+    assert xxx.my_reversed([1, 2, 3]) == [3, 2, 1]
+    assert xxx.my_reversed([]) == []

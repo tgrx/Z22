@@ -31,11 +31,13 @@ function contains() {
 assert_names() {
   dir_names=$(ls -d homeworks/* | sed -e 's/homeworks\///g')
   github_names=(
+    "__init__.py"
     "aleksey_gukov"
     "alexander_sidorov"
     "alexei_rakhmanko"
     "anastasia_husainova"
     "evgeni_gazin"
+    "gleb_kovalchuk"
     "ilya_nilov"
     "kirill_revenko"
     "kirill_shevchuk"
@@ -61,6 +63,7 @@ rm -rf homeworks/__pycache__
 
 assert_names || abort "MESS WITH HOMEWORKS USERS"
 
+pipenv run pytest homeworks/
 pipenv run python -m run_hw_tests
 
 pipenv run black --check . || abort "BLACK IS NOT HAPPY"
