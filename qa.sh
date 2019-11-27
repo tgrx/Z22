@@ -74,12 +74,9 @@ assert_names || abort "MESS WITH HOMEWORKS USERS"
 
 pipenv run pytest homeworks/ || abort "PYTEST IS NOT HAPPY"
 pipenv run pytest lessons/ || abort "ALEX'S TESTS ARE NOT HAPPY"
-
 pipenv run black --check . || abort "BLACK IS NOT HAPPY"
 pipenv run flake8 || abort "FLAKE8 IS NOT HAPPY"
 pipenv run pylint homeworks/ lessons/ || abort "PYLINT IS NOT HAPPY"
-
-
 
 
 # ---------------------------------------------------------
