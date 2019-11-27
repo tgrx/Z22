@@ -55,9 +55,12 @@ assert summa("1", "2") == "12"
 Создать функцию c названием `hello`,
 которая принимает 1 позиционный аргумент: имя
 и возвращает строку "Hello, {имя}!".
+Если имя пустое, то функция возвращает "Hi!"
 
 ```python
+assert hello("") == "Hi!"
 assert hello("Alex") == "Hello, Alex!"
+assert hello(None) == "Hi!"
 ```
 
 
