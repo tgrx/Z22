@@ -1,5 +1,6 @@
 def good_phone(phnnmbr):
-    assert isinstance(phnnmbr, str)
+    if not phnnmbr:
+        return False
     pref = "+375"
     if phnnmbr[0:4] == pref and len(phnnmbr) == 13:
         for elm in phnnmbr[1:]:
