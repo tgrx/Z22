@@ -1,11 +1,9 @@
-def good_phone(phnnmbr): 
-    if phnnmbr == None:
-        return False 
+def good_phone(phnnmbr):
     pref = "+375"
-    if (len(phnnmbr) == 13) and (phnnmbr[1:].isdigit()):
-        if phnnmbr.index(pref,0,4):
-            return True        
-    else:    
+    if phnnmbr[0:4] == pref and len(phnnmbr) == 13:
+        for elm in phnnmbr[1:]:
+            if not elm.isdigit():
+                return false
+        return True
+    else:
         return False
-    
-
