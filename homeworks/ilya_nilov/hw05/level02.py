@@ -1,5 +1,4 @@
 def hello(usrname):
-    if usrname == "" or usrname == None:
+    if not usrname:
         return "Hi!"
-    else:
-        return f"Hello, {usrname}!"
+    return f"Hello, {usrname}!"
