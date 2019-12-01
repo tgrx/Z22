@@ -1,8 +1,10 @@
 def host(hstnam):
-    from tldextract import extract
-
+    import tldextract
 
     if not hstnam:
         return " "
     listurl = tldextract.extract(hstnam)
-    return listurl.domain + '.' + listurl.suffix
+    if listurl.domain == "" and listurl.suffix == "":
+        return ""
+    else:
+        return f"{listurl.domain}.{listurl.suffix}"
