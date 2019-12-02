@@ -1,10 +1,6 @@
- 
-
 def enqueue(fifo, elm):
-    
-    fifo.insert(0,elm)
-    
-    
+
+    fifo.insert(0, elm)
 
 
 def dequeue(fifo):
