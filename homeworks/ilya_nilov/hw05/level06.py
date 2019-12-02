@@ -1,9 +1,13 @@
-def enqueue(fifo, elm):
+from collections import deque
+fifo = deque()
 
-    fifo.insert(0, elm)
+
+def enqueue(fifo, elm):
+    
+    fifo.append(elm)
 
 
 def dequeue(fifo):
-    if fifo == [""]:
+    if not fifo:
         return None
-    return fifo.pop()
+    return fifo.popleft()
