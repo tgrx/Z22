@@ -1,13 +1,9 @@
-from collections import deque
-fifo = deque()
-
-
-def enqueue(fifo, elm):
+def enqueue(x, elm):
     
-    fifo.append(elm)
+    x.append(elm)
 
 
 def dequeue(fifo):
     if not fifo:
         return None
-    return fifo.popleft()
+    return fifo.pop(0)
