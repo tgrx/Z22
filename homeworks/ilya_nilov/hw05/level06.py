@@ -1,6 +1,5 @@
-def enqueue(x, elm):
-    
-    x.append(elm)
+def enqueue(fifo, elm):
+    fifo.append(elm)
 
 
 def dequeue(fifo):

@@ -1,11 +1,5 @@
 def good_phone(phnnmbr):
-    if not phnnmbr:
+    if not phnnmbr or not phnnmbr[1:].isdigit():
         return False
-    pref = "+375"
-    if phnnmbr[0:4] == pref and len(phnnmbr) == 13:
-        for elm in phnnmbr[1:]:
-            if not elm.isdigit():
-                return False
-        return True
-    else:
-        return False
+    key = phnnmbr.startswith("+375", 0, 4) and len(phnnmbr) == 13
+    return key
