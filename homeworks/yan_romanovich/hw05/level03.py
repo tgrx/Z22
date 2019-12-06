@@ -1,2 +1,4 @@
 def good_phone(number):
-    return number is not None and len(number) == 13 and "+375" in number and number[1:].isdigit()
+    if number is not None:
+        return len(number) == 13 and "+375" in number and number[1:].isdigit()
+    return False
