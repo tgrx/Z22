@@ -1,6 +1,8 @@
+from urllib.parse import urlparse
+from urllib.parse import re
+
+
 def host(hstnam):
-    from urllib.parse import urlparse
-    from urllib.parse import re
 
     if not hstnam:
         return ""
