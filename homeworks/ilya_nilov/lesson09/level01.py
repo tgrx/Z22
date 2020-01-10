@@ -6,4 +6,4 @@ def compare_triplets(tr1, tr2):
             cntr[1] = -1
         cntr[1] = +1
         i = +1
-    return cntr         
+    return cntr
