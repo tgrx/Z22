@@ -1,4 +1,4 @@
-from typing import Any, Text, Dict
+from typing import Any, Dict, Text
 
 import pytest
 
