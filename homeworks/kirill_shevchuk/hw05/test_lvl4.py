@@ -1,4 +1,4 @@
-from homeworks.kirill_shevchuk.hw05.level04_failure import host
+from homeworks.kirill_shevchuk.hw05.level04 import host
 
 
 def test_host():
