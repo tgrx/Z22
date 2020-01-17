@@ -1,4 +1,4 @@
-from homeworks.yan_romanovich.lesson10 import level04
+from homeworks.nikita_marchenkov.lesson10 import level04
 
 
 def test():
