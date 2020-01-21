@@ -15,7 +15,7 @@ def verify(module):
     assert len(User.mro()) == 6
     assert User.mro()[0] == User
     assert User.mro()[-1] == object
-    assert len(User.__dict__) == 3
+    assert len(User.__dict__) == 4
     assert hasattr(User, "validate")
     assert "__init__" in User.__dict__
     assert "__eq__" not in User.__dict__

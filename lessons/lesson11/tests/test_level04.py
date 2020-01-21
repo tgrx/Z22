@@ -35,7 +35,6 @@ def verify(module):
     assert user1.__dict__ == {"name": 1, "email": 2}
     with pytest.raises(ValueError) as exc:
         user1.validate()
-        assert str(exc)
 
     user2 = User(name="a", email="b@c.d")
     assert user2.__dict__ == {"name": "a", "email": "b@c.d"}
