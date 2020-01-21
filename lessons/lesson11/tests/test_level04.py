@@ -33,15 +33,15 @@ def verify(module):
 
     user1 = User(name=1, email=2)
     assert user1.__dict__ == {"name": 1, "email": 2}
-    with pytest.raises(ValueError) as exc:
+    with pytest.raises(ValueError):
         user1.validate()
 
     user2 = User(name="a", email="b@c.d")
     assert user2.__dict__ == {"name": "a", "email": "b@c.d"}
     try:
         user2.validate()
-    except Exception as exc:
-        raise AssertionError from exc
+    except Exception:
+        raise AssertionError
 
     user3 = User(name=2, email=3)
     assert user3.__dict__ == {"name": 2, "email": 3}
