@@ -4,7 +4,7 @@ import re
 
 def host(url):
     if not url:
-        return False
+        return ""
     if "@" in url:
         result = re.findall(r"@\w+.\w+", url)
         result = result[0][1:]
