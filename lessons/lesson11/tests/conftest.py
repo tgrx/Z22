@@ -9,7 +9,7 @@ from project.utils import import_by_path
 def find_modules_for_level(level: Text) -> Dict[Text, Any]:
     modules = {}
 
-    for pyfile in HOMEWORKS.glob(f"**/hw05/{level}.py"):
+    for pyfile in HOMEWORKS.glob(f"**/lesson11/{level}.py"):
         student = pyfile.parts[-3]
         module = import_by_path(pyfile)
         modules[student] = module
@@ -40,13 +40,3 @@ def modules_level04() -> Dict[Text, Any]:
 @pytest.fixture
 def modules_level05() -> Dict[Text, Any]:
     return find_modules_for_level("level05")
-
-
-@pytest.fixture
-def modules_level06() -> Dict[Text, Any]:
-    return find_modules_for_level("level06")
-
-
-@pytest.fixture
-def modules_level07() -> Dict[Text, Any]:
-    return find_modules_for_level("level07")
