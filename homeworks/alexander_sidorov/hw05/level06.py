@@ -1,4 +1,5 @@
-from typing import Any, List
+from typing import Any
+from typing import List
 
 
 def enqueue(queue: List, elm: Any) -> None:
