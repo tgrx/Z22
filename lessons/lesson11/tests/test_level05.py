@@ -4,63 +4,85 @@ from typing import Callable
 
 import pytest
 
+from lessons.lesson05.tests.test_level03 import BAD_PHONES
+from . import test_level01 as regression01
+from . import test_level02 as regression02
+from . import test_level03 as regression03
+from . import test_level04 as regression04
 
-def verify(module):
+
+def verify_class_structure(klass):
+    assert isinstance(klass, type)
+
+    mro = klass.mro()
+    assert len(mro) == 6
+    assert mro[0] is klass
+    regression04.verify_class_structure(mro[1])
+    regression03.verify_class_structure(mro[2])
+    regression02.verify_class_structure(mro[3])
+    regression01.verify_class_structure(mro[4])
+    assert mro[5] == object
+
+    assert len(klass.__dict__) == 4
+    assert "__init__" in klass.__dict__
+    assert "__eq__" not in klass.__dict__
+    assert "validate" in klass.__dict__
+    assert hasattr(klass, "validate")
+    assert isinstance(getattr(klass, "validate"), Callable)
+
+
+def verify_class_init(klass):
+    with pytest.raises(TypeError):
+        klass()
+    with pytest.raises(TypeError):
+        klass(1)
+    with pytest.raises(TypeError):
+        klass(1, 2)
+    with pytest.raises(TypeError):
+        klass(name=1)
+    with pytest.raises(TypeError):
+        klass(email=1)
+    with pytest.raises(TypeError):
+        klass(1, 2, name=1, email=2)
+    with pytest.raises(TypeError):
+        klass(1, 2, 3, 4)
+    with pytest.raises(TypeError):
+        klass(1, 2, 3, phone=4)
+    with pytest.raises(TypeError):
+        klass(name=1, email=2, phone=3, password=4)
+
+    user = klass(1, 2, 3)
+    assert user.__dict__ == {"name": 2, "email": 3, "phone": 1}
+
+    user = klass(name=False, email=None, phone=True)
+    assert user.__dict__ == {"name": False, "email": None, "phone": True}
+
+
+def verify_class_validate_method(klass):
+    regression04.verify_validate_method(klass, phone="+375292020327")
+
+    for bad_phone in BAD_PHONES:
+        with pytest.raises(ValueError):
+            user = klass(name="ok", email="ok@ok.ok", phone=bad_phone)
+            user.validate()
+
+
+def verify_class(klass):
+    verify_class_structure(klass)
+    verify_class_init(klass)
+    regression03.verify_class_comparison(klass, phone=1)
+    verify_class_validate_method(klass)
+
+
+def verify_module(module):
     class_name = "User"
 
     assert hasattr(module, class_name)
 
     User = getattr(module, class_name)
-    assert isinstance(User, type)
-    assert len(User.mro()) == 6
-    assert User.mro()[0] == User
-    assert User.mro()[-1] == object
-    assert len(User.__dict__) == 4
-    assert hasattr(User, "validate")
-    assert "__init__" in User.__dict__
-    assert "__eq__" not in User.__dict__
-    assert "validate" in User.__dict__
-    assert isinstance(getattr(User, "validate"), Callable)
-
-    with pytest.raises(TypeError):
-        User()
-    with pytest.raises(TypeError):
-        User(1)
-    with pytest.raises(TypeError):
-        User(name=1)
-    with pytest.raises(TypeError):
-        User(email=1)
-
-    user1 = User(name="a", email="a@a.a", phone="+375292020327a")
-    assert user1.__dict__ == dict(name="a", email="a@a.a", phone="+375292020327a")
-    with pytest.raises(ValueError) as exc:
-        user1.validate()
-        assert str(exc)
-
-    user2 = User(name="a", email="a@a.a", phone="+375292020327")
-    assert user2.__dict__ == dict(name="a", email="a@a.a", phone="+375292020327")
-    try:
-        user2.validate()
-    except Exception as exc:
-        raise AssertionError from exc
-
-    user3 = User(name=2, email=3, phone=3)
-    assert user3.__dict__ == {"name": 2, "email": 3, "phone": 3}
-
-    assert user1 == user1
-    assert user2 == user2
-    assert user3 == user3
-
-    assert user1 == user2
-    assert user2 == user1
-
-    assert not user1 == user3
-    assert not user3 == user1
-
-    assert not user2 == user3
-    assert not user3 == user2
+    verify_class(User)
 
 
 def test(modules_level05):
     for module in modules_level05.values():
-        verify(module)
+        verify_module(module)

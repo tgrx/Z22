@@ -4,62 +4,105 @@ from typing import Callable
 
 import pytest
 
+from . import test_level01 as regression01
+from . import test_level02 as regression02
+from . import test_level03 as regression03
 
-def verify(module):
-    class_name = "User"
 
-    assert hasattr(module, class_name)
-
-    User = getattr(module, class_name)
-    assert isinstance(User, type)
-    assert len(User.mro()) == 5
-    assert User.mro()[0] == User
-    assert User.mro()[-1] == object
-    assert len(User.__dict__) == 3
-    assert hasattr(User, "validate")
-    assert "__init__" not in User.__dict__
-    assert "__eq__" not in User.__dict__
-    assert "validate" in User.__dict__
-    assert isinstance(getattr(User, "validate"), Callable)
-
-    with pytest.raises(TypeError):
-        User()
-    with pytest.raises(TypeError):
-        User(1)
-    with pytest.raises(TypeError):
-        User(name=1)
-    with pytest.raises(TypeError):
-        User(email=1)
-
-    user1 = User(name=1, email=2)
-    assert user1.__dict__ == {"name": 1, "email": 2}
+def must_be_invalid(user):
     with pytest.raises(ValueError):
-        user1.validate()
+        user.validate()
 
-    user2 = User(name="a", email="b@c.d")
-    assert user2.__dict__ == {"name": "a", "email": "b@c.d"}
+
+def must_be_valid(user):
     try:
-        user2.validate()
+        user.validate()
     except Exception:
         raise AssertionError
 
-    user3 = User(name=2, email=3)
-    assert user3.__dict__ == {"name": 2, "email": 3}
 
-    assert user1 == user1
-    assert user2 == user2
-    assert user3 == user3
+def verify_class_structure(klass):
+    assert isinstance(klass, type)
 
-    assert not user1 == user2
-    assert not user2 == user1
+    mro = klass.mro()
+    assert len(mro) == 5
+    assert mro[0] == klass
+    regression03.verify_class_structure(mro[1])
+    regression02.verify_class_structure(mro[2])
+    regression01.verify_class_structure(mro[3])
+    assert mro[4] is object
 
-    assert not user1 == user3
-    assert not user3 == user1
+    assert len(klass.__dict__) == 3
+    assert "__eq__" not in klass.__dict__
+    assert "__init__" not in klass.__dict__
+    assert "validate" in klass.__dict__
+    assert isinstance(getattr(klass, "validate"), Callable)
 
-    assert not user2 == user3
-    assert not user3 == user2
+
+def verify_validate_invalid_name(klass, **kw):
+    must_be_invalid(klass(name="", email="good@email.com", **kw))
+    must_be_invalid(klass(name="1a", email="good@email.com", **kw))
+    must_be_invalid(klass(name="A", email="good@email.com", **kw))
+    must_be_invalid(klass(name="a1A-", email="good@email.com", **kw))
+    must_be_invalid(klass(name="лул", email="good@email.com", **kw))
+
+
+def verify_validate_invalid_email_name(klass, **kw):
+    must_be_invalid(klass(name="good_name1", email="1a@host.com", **kw))
+    must_be_invalid(klass(name="good_name1", email="@host.com", **kw))
+    must_be_invalid(klass(name="good_name1", email="A@host.com", **kw))
+    must_be_invalid(klass(name="good_name1", email="a1A-@host.com", **kw))
+    must_be_invalid(klass(name="good_name1", email="лул@host.com", **kw))
+
+
+def verify_validate_invalid_email_host(klass, **kw):
+    must_be_invalid(klass(name="good_name1", email="good_name1@.", **kw))
+    must_be_invalid(klass(name="good_name1", email="good_name1@.a", **kw))
+    must_be_invalid(klass(name="good_name1", email="good_name1@1", **kw))
+    must_be_invalid(klass(name="good_name1", email="good_name1@1a", **kw))
+    must_be_invalid(klass(name="good_name1", email="good_name1@a.", **kw))
+    must_be_invalid(klass(name="good_name1", email="good_name1@a@a", **kw))
+
+
+def verify_validate_invalid_email(klass, **kw):
+    must_be_invalid(klass(name="good_name1", email="", **kw))
+    must_be_invalid(klass(name="good_name1", email="@", **kw))
+    must_be_invalid(klass(name="good_name1", email="@host", **kw))
+    must_be_invalid(klass(name="good_name1", email="name@", **kw))
+
+    verify_validate_invalid_email_name(klass, **kw)
+    verify_validate_invalid_email_host(klass, **kw)
+
+
+def verify_validate_valid_name_email(klass, **kw):
+    must_be_valid(klass(name="name", email="name@HOST", **kw))
+    must_be_valid(klass(name="name", email="name@host", **kw))
+    must_be_valid(klass(name="name1", email="name1@host1", **kw))
+    must_be_valid(klass(name="name1", email="name1@host1.b.com", **kw))
+    must_be_valid(klass(name="name1", email="name1@host1.com", **kw))
+
+
+def verify_validate_method(klass, **kw):
+    verify_validate_invalid_name(klass, **kw)
+    verify_validate_invalid_email(klass, **kw)
+    verify_validate_valid_name_email(klass, **kw)
+
+
+def verify_class(klass):
+    verify_class_structure(klass)
+    regression02.verify_class_init(klass)
+    regression03.verify_class_comparison(klass)
+    verify_validate_method(klass)
+
+
+def verify_module(module):
+    class_name = "User"
+    assert hasattr(module, class_name)
+
+    User = getattr(module, class_name)
+    verify_class(User)
 
 
 def test(modules_level04):
     for module in modules_level04.values():
-        verify(module)
+        verify_module(module)

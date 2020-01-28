@@ -8,6 +8,7 @@ class User(level04.User):
         self.phone = phone
 
     def validate(self):
+        super().validate()
         validate_phone(self.phone)
 
 

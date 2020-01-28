@@ -1,3 +1,5 @@
+import string
+
 from . import level03
 
 
@@ -26,13 +28,13 @@ def verify_name_is_nonempty(name: str):
 def verify_name_is_alnum(name):
     if not isinstance(name, str):
         raise ValueError(f"name `{name!r}` is not a string")
-    if not name.isalnum():
+    if not set(name).issubset(set(string.ascii_lowercase + string.digits)):
         raise ValueError(f"name `{name!r}` has non-alphanumeric chars")
 
 
 def verify_name_startswith_letter(name):
-    if not name[0].islower():
-        raise ValueError(f"name `{name!r}` does not start with lowercase letter")
+    if name[0] not in string.ascii_letters:
+        raise ValueError(f"name `{name!r}` does not start with letter")
 
 
 def verify_email_is_nonempty(email):
@@ -68,8 +70,8 @@ def validate_host(host: str):
     if not host:
         raise ValueError("host is empty")
 
-    if not host[0].islower():
-        raise ValueError("host does not start with a lowercase letter")
+    if host[0] not in string.ascii_letters:
+        raise ValueError("host does not start with an ascii letter")
 
     if host[0] == ".":
         raise ValueError("host starts with a dot")
