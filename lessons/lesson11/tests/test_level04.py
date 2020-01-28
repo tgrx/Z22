@@ -48,27 +48,27 @@ def verify_validate_invalid_name(klass, **kw):
 
 
 def verify_validate_invalid_email_name(klass, **kw):
-    must_be_invalid(klass(name="good_name1", email="1a@host.com", **kw))
-    must_be_invalid(klass(name="good_name1", email="@host.com", **kw))
-    must_be_invalid(klass(name="good_name1", email="A@host.com", **kw))
-    must_be_invalid(klass(name="good_name1", email="a1A-@host.com", **kw))
-    must_be_invalid(klass(name="good_name1", email="лул@host.com", **kw))
+    must_be_invalid(klass(name="goodname1", email="1a@host.com", **kw))
+    must_be_invalid(klass(name="goodname1", email="@host.com", **kw))
+    must_be_invalid(klass(name="goodname1", email="A@host.com", **kw))
+    must_be_invalid(klass(name="goodname1", email="a1A-@host.com", **kw))
+    must_be_invalid(klass(name="goodname1", email="лул@host.com", **kw))
 
 
 def verify_validate_invalid_email_host(klass, **kw):
-    must_be_invalid(klass(name="good_name1", email="good_name1@.", **kw))
-    must_be_invalid(klass(name="good_name1", email="good_name1@.a", **kw))
-    must_be_invalid(klass(name="good_name1", email="good_name1@1", **kw))
-    must_be_invalid(klass(name="good_name1", email="good_name1@1a", **kw))
-    must_be_invalid(klass(name="good_name1", email="good_name1@a.", **kw))
-    must_be_invalid(klass(name="good_name1", email="good_name1@a@a", **kw))
+    must_be_invalid(klass(name="goodname1", email="goodname1@.", **kw))
+    must_be_invalid(klass(name="goodname1", email="goodname1@.a", **kw))
+    must_be_invalid(klass(name="goodname1", email="goodname1@1", **kw))
+    must_be_invalid(klass(name="goodname1", email="goodname1@1a", **kw))
+    must_be_invalid(klass(name="goodname1", email="goodname1@a.", **kw))
+    must_be_invalid(klass(name="goodname1", email="goodname1@a@a", **kw))
 
 
 def verify_validate_invalid_email(klass, **kw):
-    must_be_invalid(klass(name="good_name1", email="", **kw))
-    must_be_invalid(klass(name="good_name1", email="@", **kw))
-    must_be_invalid(klass(name="good_name1", email="@host", **kw))
-    must_be_invalid(klass(name="good_name1", email="name@", **kw))
+    must_be_invalid(klass(name="goodname1", email="", **kw))
+    must_be_invalid(klass(name="goodname1", email="@", **kw))
+    must_be_invalid(klass(name="goodname1", email="@host", **kw))
+    must_be_invalid(klass(name="goodname1", email="name@", **kw))
 
     verify_validate_invalid_email_name(klass, **kw)
     verify_validate_invalid_email_host(klass, **kw)
