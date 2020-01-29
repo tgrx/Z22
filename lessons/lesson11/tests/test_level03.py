@@ -23,8 +23,8 @@ def verify_class_comparison(klass, **kwargs):
     user1 = klass(name=1, email=2, **kwargs)
     user2 = klass(name=2, email=2, **kwargs)
     user3 = klass(name=2, email=3, **kwargs)
-    user4 = klass(name="ok", email="ok@ok.ok", **kwargs)
-    user5 = klass(name="ok1", email="ok@ok.ok", **kwargs)
+    user4 = klass(name="ok", email=f"{'ok' * 10000}@ok.ok", **kwargs)
+    user5 = klass(name="ok1", email=f"{'ok' * 10000}@ok.ok", **kwargs)
 
     assert user1 == user1
     assert user1 == user2

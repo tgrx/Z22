@@ -1,4 +1,5 @@
 # pylint: disable=C0103
+
 from random import choice
 from typing import NoReturn
 
@@ -6,44 +7,58 @@ _CLASS_NAME = "Server"
 
 
 def verify_module(module):
-    assert hasattr(module, _CLASS_NAME)
+    assert hasattr(
+        module, _CLASS_NAME
+    ), f"module {module.__name__} has no attribute {_CLASS_NAME}"
 
 
 def verify_class(cls):
-    assert isinstance(cls, type)
-    assert cls.mro() == [cls, object]
-    assert "__init__" in cls.__dict__
-    assert "add_handler" in cls.__dict__
-    assert "serve" in cls.__dict__
+    assert isinstance(cls, type), f"{cls} is not a class"
+    assert cls.mro() == [cls, object], f"{cls} has unexpected parents"
+    assert "__init__" in cls.__dict__, f"{cls} has no constructor (__init__)"
+    assert "add_handler" in cls.__dict__, f"{cls} has no method add_handler"
+    assert "serve" in cls.__dict__, f"{cls} has no method serve"
 
-    assert "Redirect" in cls.__dict__
+    assert "Redirect" in cls.__dict__, f"{cls} has no internal class Redirect"
     Redirect = getattr(cls, "Redirect")
-    assert isinstance(Redirect, type)
-    assert issubclass(Redirect, Exception)
+    assert isinstance(Redirect, type), f"{cls}.Redirect is not a class"
+    assert issubclass(
+        Redirect, Exception
+    ), f"{cls}.Redirect does not subclass the Exception"
 
 
 def handler_index(server, url) -> str:
-    assert server
-    assert url
+    assert server, "server has not been passed to the handler"
+    assert url, "url has not been passed to the handler"
     return f"Hi there!"
 
 
 def handler_200(server, url) -> str:
-    assert server
+    assert server, "server has not been passed to the handler"
+    assert url, "url has not been passed to the handler"
     return f"scheme={url.scheme}"
 
 
 def handler_302(server, url) -> NoReturn:
-    assert url
+    assert server, "server has not been passed to the handler"
+    assert url, "url has not been passed to the handler"
     raise server.Redirect
 
 
 def handler_500(server, url) -> NoReturn:
-    assert server
-    assert url
-    raise choice(
-        (Exception, NameError, RuntimeError, TypeError, ValueError, ZeroDivisionError,)
-    )("kek")
+    assert server, "server has not been passed to the handler"
+    assert url, "url has not been passed to the handler"
+
+    exceptions = {
+        Exception,
+        NameError,
+        RuntimeError,
+        TypeError,
+        ValueError,
+        ZeroDivisionError,
+    }
+
+    raise choice(exceptions)("kek")
 
 
 def verify(module):

@@ -4,11 +4,14 @@ from typing import Callable
 
 def verify(module, response):
     func_name = "get_typed_headers"
-
-    assert hasattr(module, func_name)
+    assert hasattr(
+        module, func_name
+    ), f"module {module.__name__} has no attribute {func_name}"
 
     get_typed_headers = getattr(module, func_name)
-    assert isinstance(get_typed_headers, Callable)
+    assert isinstance(
+        get_typed_headers, Callable
+    ), f"entity {module.__name__}.{func_name} is not a function"
 
     headers = get_typed_headers(response)
 
