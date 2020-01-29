@@ -49,14 +49,14 @@ def handler_500(server, url) -> NoReturn:
     assert server, "server has not been passed to the handler"
     assert url, "url has not been passed to the handler"
 
-    exceptions = {
+    exceptions = (
         Exception,
         NameError,
         RuntimeError,
         TypeError,
         ValueError,
         ZeroDivisionError,
-    }
+    )
 
     raise choice(exceptions)("kek")
 
