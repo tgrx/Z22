@@ -1,5 +1,7 @@
 # pylint: disable=C0103,R0124
 
+from itertools import chain
+from random import choices
 from typing import Callable
 
 import pytest
@@ -7,6 +9,20 @@ import pytest
 from . import test_level01 as regression01
 from . import test_level02 as regression02
 from . import test_level03 as regression03
+
+
+def kek():
+    return "".join(
+        choices(
+            "".join(
+                chain(
+                    (chr(i) for i in range(0x80, 0xD800)),
+                    (chr(i) for i in range(0xE000, 0xE01F0)),
+                )
+            ),
+            k=30,
+        )
+    )
 
 
 def must_be_invalid(user):
@@ -45,6 +61,7 @@ def verify_validate_invalid_name(klass, **kw):
     must_be_invalid(klass(name="A", email="good@email.com", **kw))
     must_be_invalid(klass(name="a1A-", email="good@email.com", **kw))
     must_be_invalid(klass(name="лул", email="good@email.com", **kw))
+    must_be_invalid(klass(name=kek(), email="good@email.com", **kw))
 
 
 def verify_validate_invalid_email_name(klass, **kw):
@@ -53,6 +70,7 @@ def verify_validate_invalid_email_name(klass, **kw):
     must_be_invalid(klass(name="goodname1", email="A@host.com", **kw))
     must_be_invalid(klass(name="goodname1", email="a1A-@host.com", **kw))
     must_be_invalid(klass(name="goodname1", email="лул@host.com", **kw))
+    must_be_invalid(klass(name="goodname1", email=f"{kek()}@host.com", **kw))
 
 
 def verify_validate_invalid_email_host(klass, **kw):
@@ -69,6 +87,7 @@ def verify_validate_invalid_email(klass, **kw):
     must_be_invalid(klass(name="goodname1", email="@", **kw))
     must_be_invalid(klass(name="goodname1", email="@host", **kw))
     must_be_invalid(klass(name="goodname1", email="name@", **kw))
+    must_be_invalid(klass(name="goodname1", email="", **kw))
 
     verify_validate_invalid_email_name(klass, **kw)
     verify_validate_invalid_email_host(klass, **kw)
