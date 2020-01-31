@@ -75,11 +75,13 @@ def verify_validate_invalid_email(klass, **kw):
 
 
 def verify_validate_valid_name_email(klass, **kw):
+    must_be_valid(klass(name="a", email="a@a", **kw))
     must_be_valid(klass(name="name", email="name@HOST", **kw))
     must_be_valid(klass(name="name", email="name@host", **kw))
     must_be_valid(klass(name="name1", email="name1@host1", **kw))
     must_be_valid(klass(name="name1", email="name1@host1.b.com", **kw))
     must_be_valid(klass(name="name1", email="name1@host1.com", **kw))
+    must_be_valid(klass(name="zz9", email="zz9@zz9", **kw))
 
 
 def verify_validate_method(klass, **kw):
