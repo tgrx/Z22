@@ -1,5 +1,7 @@
 # pylint: disable=C0103,R0124
 
+from collections import namedtuple
+
 from . import test_level01 as regression01
 from . import test_level02 as regression02
 
@@ -64,6 +66,9 @@ def verify_class_comparison(klass, **kwargs):
     assert not user1 == 2
     assert not 2 == user2  # pylint: disable=C0122
     assert not 3 == user3  # pylint: disable=C0122
+
+    c = namedtuple("C", ["email"])(2)
+    assert not user1 == c
 
 
 def verify_class(klass):
