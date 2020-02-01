@@ -7,3 +7,5 @@ disable=
     C0330,  # [black] Wrong hanging indentation before block
     R0801,  # Duplicate code
     R0903,  # Too few public methods
+    W0703,  # Catching too general exception
+
