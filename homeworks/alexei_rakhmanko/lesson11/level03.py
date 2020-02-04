@@ -7,6 +7,6 @@ class User(level02.User):
     """класс"""
 
     def __eq__(self, other):
-        if isinstance(self, User):
+        if isinstance(other, User):
             return self.email == other.email
         return False
