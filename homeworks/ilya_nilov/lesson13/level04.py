@@ -17,7 +17,7 @@ class Response:
 def is_validate_header(http_particle):
     if http_particle:
         return make_headers(http_particle) + "\n"
-    return ""  # можно ли ничего возвращать, или что будет корректнее?
+    return ""  # и можно ли ничего не возвращать, или что будет корректнее?
 
 
 def is_validate_body(http_particle):
