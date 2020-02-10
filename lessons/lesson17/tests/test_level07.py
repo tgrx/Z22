@@ -19,70 +19,75 @@ def verify_function(func):
     assert callable(func), f"entity {func} is not a function"
 
 
-def verify_typecheck_trivial(decorator):
+def verify_typecheck_untyped(decorator):
     @decorator
-    def decoratee(arg1, arg2):
-        return arg1 + arg2
+    def untyped(arg1, arg2):
+        return arg1 / arg2
 
     try:
-        decoratee("a", "b")
-    except Exception:
-        raise AssertionError("typecheck failed")
+        untyped(1, 1)
+    except Exception as err:
+        raise AssertionError(f"type check failed") from err
+
+    with pytest.raises(ZeroDivisionError):
+        untyped(1, 0)
 
 
 def verify_typecheck_args(decorator):
     @decorator
-    def decoratee(arg1: str, arg2: int):
-        if not arg1:
-            return ""
-        return arg1[:-1] + arg1[-1] * arg2
+    def typed_args(arg1: int, arg2: int):
+        return arg1 / arg2
 
     try:
-        decoratee("a", 1)
-    except Exception:
-        raise AssertionError("decorator failed")
+        typed_args(1, 1)
+    except Exception as err:
+        raise AssertionError(f"type check failed") from err
+
+    with pytest.raises(ZeroDivisionError):
+        typed_args(1, 0)
 
     with pytest.raises(TypeError):
-        decoratee([1], 1)
+        typed_args(1j, 0)
 
     with pytest.raises(TypeError):
-        decoratee([1], "x")
+        typed_args(1, 0j)
 
 
 def verify_typecheck_return(decorator):
     @decorator
-    def decoratee(arg1, arg2) -> str:
-        return arg1 + arg2
+    def typed_return(arg1, arg2) -> float:
+        return arg1 / arg2
 
     try:
-        decoratee("a", "b")
-    except Exception:
-        raise AssertionError("decorator failed")
+        typed_return(1, 1)
+    except Exception as err:
+        raise AssertionError("decorator failed") from err
 
     with pytest.raises(TypeError):
-        decoratee(1, 2)
+
+        class _C:
+            def __truediv__(self, other):
+                raise KeyError
+
+        typed_return(_C(), 0)
 
     with pytest.raises(TypeError):
-        decoratee([1], [2])
+        typed_return(1, 0)
 
     with pytest.raises(TypeError):
-        decoratee([1], 2)
+        typed_return(1j, 2j)
 
 
 def verify_typecheck_raise(decorator):
     @decorator
-    def decoratee(arg1, arg2) -> NoReturn:
+    def typed_noreturn(arg1, arg2) -> NoReturn:
         return arg1 / arg2
 
-    try:
-        decoratee(1, 0)
-    except ZeroDivisionError:
-        pass
-    except Exception:
-        raise AssertionError("decorator failed")
+    with pytest.raises(ZeroDivisionError):
+        typed_noreturn(1, 0)
 
     with pytest.raises(TypeError):
-        decoratee(1, 2)
+        typed_noreturn(1, 2)
 
 
 def verify(module):
@@ -91,7 +96,7 @@ def verify(module):
     typecheck = getattr(module, _FUNC_NAME)
     verify_function(typecheck)
 
-    verify_typecheck_trivial(typecheck)
+    verify_typecheck_untyped(typecheck)
     verify_typecheck_args(typecheck)
     verify_typecheck_return(typecheck)
     verify_typecheck_raise(typecheck)
