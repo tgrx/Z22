@@ -27,7 +27,7 @@ def verify_typecheck_untyped(decorator):
     try:
         untyped(1, 1)
     except Exception as err:
-        raise AssertionError(f"type check failed") from err
+        raise AssertionError(f"type check broken") from err
 
     with pytest.raises(ZeroDivisionError):
         untyped(1, 0)
@@ -41,7 +41,7 @@ def verify_typecheck_args(decorator):
     try:
         typed_args(1, 1)
     except Exception as err:
-        raise AssertionError(f"type check failed") from err
+        raise AssertionError(f"type check broken") from err
 
     with pytest.raises(ZeroDivisionError):
         typed_args(1, 0)
@@ -61,7 +61,7 @@ def verify_typecheck_return(decorator):
     try:
         typed_return(1, 1)
     except Exception as err:
-        raise AssertionError("decorator failed") from err
+        raise AssertionError("type check broken") from err
 
     with pytest.raises(TypeError):
 
