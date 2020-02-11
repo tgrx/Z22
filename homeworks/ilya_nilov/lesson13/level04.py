@@ -12,12 +12,10 @@ class Response:
 {is_validate_header(self.headers)}{is_validate_body(self.body)}"""
 
 
-# можно ли как-то "отловить", что именно передается в функцию из вне?
-# (self.headers или self.body)
 def is_validate_header(http_particle):
     if http_particle:
         return make_headers(http_particle) + "\n"
-    return ""  # и можно ли ничего не возвращать, или что будет корректнее?
+    return ""
 
 
 def is_validate_body(http_particle):
