@@ -5,9 +5,8 @@ def benchmark(function, *ar, **kw):
     def decorator(*ar, **kw):
         try:
             start_time = time.time()
-            function(*ar, **kw)
+            result = function(*ar, **kw)
+        finally:
             print(int(time.time() - start_time))
-        except Exception:
-            print(0)
-        return function(*ar, **kw)
+        return result
     return decorator
