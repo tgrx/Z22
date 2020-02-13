@@ -2,7 +2,7 @@
 
 
 def rotate_left(_sp, rev):
-    """Функия вращения"""
+    """Функция вращения"""
     result = _sp[:]
     for _ in range(rev):
         result.append(result[0])
