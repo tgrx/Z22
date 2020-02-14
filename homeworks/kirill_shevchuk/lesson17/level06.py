@@ -3,10 +3,9 @@ import time
 
 def benchmark(function, *ar, **kw):
     def decorator(*ar, **kw):
+        start_time = time.time()
         try:
-            start_time = time.time()
-            result = function(*ar, **kw)
+            return function(*ar, **kw)
         finally:
             print(int(time.time() - start_time))
-        return result
     return decorator
