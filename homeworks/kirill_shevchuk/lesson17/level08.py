@@ -1,7 +1,8 @@
 class Functor:
-    def __init__(self, function, ar=None, kw=None):
+    def __init__(self, function, arg=None, kwarg=None):
         self.function = function
-        self.ar = ar or ()
-        self.kw = kw or {}
+        self.arg = arg or ()
+        self.kwarg = kwarg or {}
+
     def __call__(self):
-        return self.function(*self.ar, **self.kw)
+        return self.function(*self.arg, **self.kwarg)

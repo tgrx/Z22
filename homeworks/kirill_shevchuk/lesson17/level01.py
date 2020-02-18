@@ -1,2 +1,2 @@
-def key(n):
-    return n
+def key(value):
+    return value
